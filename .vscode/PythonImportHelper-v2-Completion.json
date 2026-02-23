@@ -1,0 +1,98 @@
+[
+    {
+        "label": "cv2",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "cv2",
+        "description": "cv2",
+        "detail": "cv2",
+        "documentation": {}
+    },
+    {
+        "label": "mediapipe",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "mediapipe",
+        "description": "mediapipe",
+        "detail": "mediapipe",
+        "documentation": {}
+    },
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "get_bbox_pixels",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "anonymize_face",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "draw_bounding_box",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "cap",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "cap = cv2.VideoCapture(video_path)\nfps=cap.get(cv2.CAP_PROP_FPS)\n# Initialize face detection\nmp_face_detection = mp.solutions.face_detection\nwith mp_face_detection.FaceDetection(\n    model_selection=0,\n    min_detection_confidence=0.6\n) as face_detection:\n    while True:\n        # Read frame",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "mp_face_detection",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "mp_face_detection = mp.solutions.face_detection\nwith mp_face_detection.FaceDetection(\n    model_selection=0,\n    min_detection_confidence=0.6\n) as face_detection:\n    while True:\n        # Read frame\n        ret, frame = cap.read()\n        if not ret:\n            break",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "get_bbox_pixels",
+        "kind": 2,
+        "importPath": "utils",
+        "description": "utils",
+        "peekOfCode": "def get_bbox_pixels(bbox, frame_shape):\n    h, w = frame_shape[:2]\n    xmin = int(bbox.xmin * w)\n    ymin = int(bbox.ymin * h)\n    box_width = int(bbox.width * w)\n    box_height = int(bbox.height * h)\n    xmax = xmin + box_width\n    ymax = ymin + box_height\n    # Clamp\n    xmin = max(0, xmin)",
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "anonymize_face",
+        "kind": 2,
+        "importPath": "utils",
+        "description": "utils",
+        "peekOfCode": "def anonymize_face(frame, xmin, ymin, xmax, ymax, method=\"black\"):\n    face = frame[ymin:ymax, xmin:xmax]\n    if face.size == 0:\n        return frame\n    if method == \"black\":\n        frame[ymin:ymax, xmin:xmax] = 0\n    elif method == \"blur\":\n        blurred = cv2.GaussianBlur(face, (51, 51), 0)\n        frame[ymin:ymax, xmin:xmax] = blurred\n    elif method == \"pixelate\":",
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "draw_bounding_box",
+        "kind": 2,
+        "importPath": "utils",
+        "description": "utils",
+        "peekOfCode": "def draw_bounding_box(frame, xmin, ymin, xmax, ymax, confidence):\n    cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (0,255,0), 2)\n    cv2.putText(frame, f\"{confidence:.2f}\",\n                (xmin, ymin-10),\n                cv2.FONT_HERSHEY_SIMPLEX,\n                0.5,\n                (0,255,0),\n                2)\n    return frame",
+        "detail": "utils",
+        "documentation": {}
+    }
+]
